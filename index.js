@@ -220,7 +220,7 @@ function Struct()
   	
   
   var beenHere  = false;
-  applyClosures= function(p){
+  function applyClosures(p){
   	if(beenHere) return;
   	p.closures.forEach(function(el){
   		el(p);
