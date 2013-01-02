@@ -133,7 +133,8 @@ function Struct()
        allocated : false,
        len : 0, 
        fields :  {},
-       closures : []
+       closures : [],
+       beenHere: false
   },
   self = this; 
    
@@ -219,13 +220,12 @@ function Struct()
   } 
   	
   
-  var beenHere  = false;
   applyClosures= function(p){
-  	if(beenHere) return;
+  	if(p.beenHere) return;
   	p.closures.forEach(function(el){
   		el(p);
   	});
-  	beenHere = true;
+  	p.beenHere = true;
   }
   
   function allocateFields(){
