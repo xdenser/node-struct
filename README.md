@@ -84,8 +84,8 @@ define 16 bit unsigned field with little-endian and big-endian byte order
 ### word32Sle(name),word32Sbe(name),word32Ule(name),word32Ube(name),word64Sle(name),word64Sbe(name),word64Ule(name),word64Ube(name)
 same for 32 and 64 bit fields
 
-### chars(name,length)
-defines array of chars in 'ascii' encoding, name - name of the field, length - length of array
+### chars(name,length[,encoding])
+defines array of chars with `encoding` ('ascii' by default) encoding, name - name of the field, length - length of array
 
 ### array(name, length, type, ...)
 defines array of fields (internally it is Struct() object with field names set to 0,1,2,... ).
