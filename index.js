@@ -66,16 +66,17 @@ function intField(p,offset,length,le,signed){
 	}
 }
 
-function charField(p,offset,length)
+function charField(p,offset,length,encoding)
 {
 	this.length = length;
+	this.encoding = encoding;
 	this.get = function(){
-		return p.buf.toString('ascii',offset,offset+length);
+		return p.buf.toString(this.encoding,offset,offset+length);
 	}
 	this.set = function(val){
 		debugger;
 		if(val.length > length) val = val.substring(0,length);
-		p.buf.write(val,offset,'ascii');
+		p.buf.write(val,offset,this.encoding);
 	}
 }
 
@@ -176,10 +177,10 @@ function Struct()
   	});
   });
   
-  this.chars = function(key,length){
+  this.chars = function(key,length,encoding){
   	checkAllocated();
   	priv.closures.push(function(p){
-  	  p.fields[key] = new charField(p,p.len,length);
+  	  p.fields[key] = new charField(p,p.len,length,encoding||'ascii');
   	  p.len += length;
   	});
   	return this;
