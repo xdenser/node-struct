@@ -41,7 +41,6 @@ function intField(p,offset,length,le,signed){
 	}
 	
 	function getSVal(bor){
-		debugger;
 		var val = getUVal(bor);
 		if ((p.buf[offset + (le?(length-1):0)] & 0x80) == 0x80) {
            val -= Math.pow(256, length);
@@ -74,7 +73,6 @@ function charField(p,offset,length,encoding)
 		return p.buf.toString(this.encoding,offset,offset+length);
 	}
 	this.set = function(val){
-		debugger;
 		if(val.length > length) val = val.substring(0,length);
 		p.buf.write(val,offset,this.encoding);
 	}
@@ -108,7 +106,6 @@ function arrayField(p,offset,len,type){
 		}
 		else if( type in as	)
 		{
-			debugger;
 			args[0] = i;
 			as[type].apply(as,args);
 		}
