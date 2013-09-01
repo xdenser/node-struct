@@ -1,5 +1,5 @@
 { "name" : "struct"
-, "version" : "v0.0.4"
+, "version" : "v0.0.5"
 , "description" : "Pack/Unpack multibyte binary values from/to buffers "
 , "author": "Denys Khanzhiyev"
 , "main": "./index.js"
@@ -10,15 +10,13 @@
   ]
 , "bugs" : { "web" : "http://github.com/xdenser/node-struct/issues" } 
 , "licenses" : [ { "type" : "MIT" } ] 
-, "dependencies" : {
-  "node-proxy" : ">=0.5.1"
-}
+, "dependencies" : {}
 , "repositories" :
   [ { "type" : "git"
     , "url" : "http://github.com/xdenser/node-struct.git"
     }
   ]
 , "engines": {
-	"node": ">0.4.0"
+	"node": ">0.6.0"
  }  
 }
