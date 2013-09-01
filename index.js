@@ -1,4 +1,3 @@
-var Proxy = require('node-proxy');
 
 function byteField(p, offset) {
     this.length = 1;
@@ -288,39 +287,32 @@ function Struct() {
         return priv.buf;
     }
 
-    this.fields = Proxy.create({
-        hasOwn : function(name) {
-            return (priv.fields.hasOwnProperty(name));
-        },
-        get : function(r, name) {
-            var res;
-            if (priv.fields.hasOwnProperty(name))
-                res = self.get(name);
-            else
-                return undefined;
-            if ( res instanceof Struct)
-                return res.fields
-            else
-                return res;
-        },
-        set : function(r, name, value) {
-            self.set(name, value);
-            return true;
-        },
-        enumerate : function() {
-            var result = [];
-            for (var name in priv.fields) {
-                result.push(name);
-            };
-            return result;
-        },
-        keys : function() {
-            var result = [];
-            for (var name in priv.fields) {
-                result.push(name);
-            };
-            return result;
-        }
+    function getFields(){
+        var fields = {};
+        Object.keys(priv.fields).forEach(function(key){
+            Object.defineProperty(fields,key,{
+                get: function(){
+                    var res = self.get(key);
+                    if (res instanceof Struct) return res.fields;
+                    else return res;
+                },
+                set: function(newVal){
+                   self.set(key,newVal);  
+                },
+                enumerable : true
+            });
+        });
+        return fields;
+    };
+    
+    var _fields;
+    Object.defineProperty(this,'fields',{
+           get: function(){
+             if(_fields) return _fields;
+             return (_fields = getFields());  
+           },
+           enumerable : true,
+           configurable : true
     });
 
 }
