@@ -1,7 +1,6 @@
 Struct
 ======
 NodeJS module to work with buffers as structures (or records) of various fields (like c struct declaration, or pascal record).
-Uses [node-proxy](https://github.com/samshull/node-proxy).
 
 Installation
 ============
