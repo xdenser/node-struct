@@ -79,6 +79,7 @@ function charField(p, offset, length, encoding) {
         }
     }
     this.set = function(val) {
+        val += "\0";
         if (val.length > length)
             val = val.substring(0, length);
         p.buf.write(val, offset, this.encoding);
@@ -90,8 +91,8 @@ function structField(p, offset, struct) {
     this.get = function() {
         return struct;
     }
-    this.set = function() {
-        throw new Error('Cant overwrite Struct');
+    this.set = function(val) {
+        struct.set(val)；
     }
     this.allocate = function() {
         struct._setBuff(p.buf.slice(offset, offset + struct.length()));
@@ -99,9 +100,6 @@ function structField(p, offset, struct) {
 }
 
 function arrayField(p, offset, len, type) {
-    this.set = function() {
-        throw new Error('Cant overwrite Array');
-    }
     var as = Struct();
     var args = [].slice.call(arguments, 4);
     args.unshift(0);
@@ -120,6 +118,9 @@ function arrayField(p, offset, len, type) {
     this.get = function() {
         return as;
     }
+    this.set = function(val){
+        as.set(val);
+    } 
 }
 
 function Struct() {
@@ -277,12 +278,19 @@ function Struct() {
     }
 
     this.set = function(key, val) {
-        if ( key in priv.fields) {
-            priv.fields[key].set(val);
-        } else
-            throw new Error('Can not find field ' + key);
+        if(arguments.length == 2){
+            if ( key in priv.fields) {
+                priv.fields[key].set(val);
+            } else
+                throw new Error('Can not find field ' + key);
+        }else if(Buffer.isBuffer(key)){
+            this._setBuff(key)；
+        }else{
+            for(var k in key){
+                this.set(k, key[k]);
+            }
+        }
     }
-
     this.buffer = function() {
         return priv.buf;
     }
