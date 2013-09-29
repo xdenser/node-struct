@@ -57,7 +57,6 @@ function intField(p, offset, length, le, signed) {
     var 
      nativeSuff = (signed?'':'U') +'Int'+ (length*8)+ (le?'LE':'BE'),
      readMethod = Buffer.prototype['read' + nativeSuff], writeMethod = Buffer.prototype['write' + nativeSuff];
-     console.log(readMethod,writeMethod);
        
     
     if (!readMethod) {
@@ -67,7 +66,6 @@ function intField(p, offset, length, le, signed) {
         }
     }
     else {
-        console.log('useNative read '+readMethod)
         this.get = function() {
             return readMethod.call(p.buf,offset);
         };    
@@ -81,7 +79,6 @@ function intField(p, offset, length, le, signed) {
         }
     }
     else {
-        console.log('useNative write '+writeMethod)
         this.set = function(val){
            writeMethod.call(p.buf,val,offset); 
         }

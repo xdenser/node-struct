@@ -28,7 +28,7 @@ function testNativeWRW(z){
 
 function doTest(f){
     var s = Date.now();//process.hrtime();
-    for(var i=0; i< 100000; i++){
+    for(var i=0; i< 1000000; i++){
         f(i);
     }
     return [Date.now(),s];
