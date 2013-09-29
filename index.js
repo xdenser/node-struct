@@ -53,16 +53,40 @@ function intField(p, offset, length, le, signed) {
             p.buf[offset + i] = Math.floor(val / Math.pow(256, o)) & 0xff;
         });
     }
-
-
-    this.get = function() {
-        var bor = le ? lec : bec;
-        return ( signed ? getSVal(bor) : getUVal(bor));
+    
+    var 
+     nativeSuff = (signed?'':'U') +'Int'+ (length*8)+ (le?'LE':'BE'),
+     readMethod = Buffer.prototype['read' + nativeSuff], writeMethod = Buffer.prototype['write' + nativeSuff];
+     console.log(readMethod,writeMethod);
+       
+    
+    if (!readMethod) {
+        this.get = function() {
+            var bor = le ? lec : bec;
+            return ( signed ? getSVal(bor) : getUVal(bor));
+        }
     }
-    this.set = function(val) {
-        var bor = le ? lec : bec;
-        setVal(bor, val);
+    else {
+        console.log('useNative read '+readMethod)
+        this.get = function() {
+            return readMethod.call(p.buf,offset);
+        };    
     }
+
+    
+    if (!writeMethod) {
+        this.set = function(val) {
+            var bor = le ? lec : bec;
+            setVal(bor, val);
+        }
+    }
+    else {
+        console.log('useNative write '+writeMethod)
+        this.set = function(val){
+           writeMethod.call(p.buf,val,offset); 
+        }
+    }
+
 }
 
 function charField(p, offset, length, encoding) {
@@ -294,20 +318,29 @@ function Struct() {
     this.buffer = function() {
         return priv.buf;
     }
+    
+    
     function getFields() {
         var fields = {};
         Object.keys(priv.fields).forEach(function(key) {
+            var setFunc, getFunc;
+            if(priv.fields[key] instanceof structField ||
+               priv.fields[key] instanceof arrayField)  {
+                   getFunc = function(){
+                       return priv.fields[key].get().fields;
+                   };
+                   setFunc = function(newVal){
+                       self.set(key, newVal); 
+                   };
+               }
+             else {
+               getFunc = priv.fields[key].get;
+               setFunc = priv.fields[key].set;
+             };
+            
             Object.defineProperty(fields, key, {
-                get : function() {
-                    var res = self.get(key);
-                    if ( res instanceof Struct)
-                        return res.fields;
-                    else
-                        return res;
-                },
-                set : function(newVal) {
-                    self.set(key, newVal);
-                },
+                get : getFunc,
+                set : setFunc,
                 enumerable : true
             });
         });
