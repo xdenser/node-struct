@@ -87,10 +87,11 @@ function intField(p, offset, length, le, signed) {
 }
 
 function charField(p, offset, length, encoding) {
-    this.length = length;
-    this.encoding = encoding;
-    this.get = function() {
-        var result = p.buf.toString(this.encoding, offset, offset + length);
+    var self = this;
+    self.length = length;
+    self.encoding = encoding;
+    self.get = function() {
+        var result = p.buf.toString(self.encoding, offset, offset + length);
         var strlen = result.indexOf("\0");
         if (strlen == -1) {
             return result;
@@ -98,11 +99,17 @@ function charField(p, offset, length, encoding) {
             return result.slice(0, strlen);
         }
     }
-    this.set = function(val) {
+    self.set = function(val) {
+        /*
+        // comment off these might be less rubust, but chars encoding
+        // would be ok
         val += "\0";
         if (val.length > length)
             val = val.substring(0, length);
-        p.buf.write(val, offset, this.encoding);
+        */
+
+        // buf.write(string, [offset], [length], [encoding])
+        p.buf.write(val, offset, length, self.encoding);
     }
 }
 
