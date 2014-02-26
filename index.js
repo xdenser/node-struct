@@ -91,6 +91,8 @@ function charField(p, offset, length, encoding) {
     self.length = length;
     self.encoding = encoding;
     self.get = function() {
+        if (!length) return;
+
         var result = p.buf.toString(self.encoding, offset, offset + length);
         var strlen = result.indexOf("\0");
         if (strlen == -1) {
@@ -100,6 +102,8 @@ function charField(p, offset, length, encoding) {
         }
     }
     self.set = function(val) {
+        if (!length) return;
+
         /*
         // comment off these might be less rubust, but chars encoding
         // would be ok
