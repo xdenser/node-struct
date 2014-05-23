@@ -271,7 +271,7 @@ function Struct() {
     }
 
 
-    this._setBuff = function(buff) {
+    this._setBuff = this.setBuffer = function(buff) {
         priv.buf = buff;
         applyClosures(priv);
         allocateFields();
