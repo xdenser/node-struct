@@ -257,8 +257,13 @@ function Struct() {
     function applyClosures(p) {
         if (beenHere)
             return;
+        priv.offset = {}
         p.closures.forEach(function(el) {
+            var offsetof = p.len;
+            priv.offset[p.len] = priv.fields[priv.fields.length-1];
             el(p);
+            var arr = Object.keys (priv.fields);
+            priv.offset[offsetof] = arr[arr.length-1]
         });
         beenHere = true;
     }
@@ -327,6 +332,14 @@ function Struct() {
         return priv.buf;
     }
     
+    this.getOffset = function (field) {
+      var offset = priv.offset;
+      for (var c in offset) {
+        if (offset[c] == field)
+          return c;
+      }
+      return -1;
+    }
     
     function getFields() {
         var fields = {};
