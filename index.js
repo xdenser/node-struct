@@ -1,5 +1,6 @@
 function byteField(p, offset) {
     this.length = 1;
+    this.offset = offset;
     this.get = function() {
         return p.buf[offset];
     }
@@ -10,6 +11,7 @@ function byteField(p, offset) {
 
 function boolField(p, offset, length) {
     this.length = length;
+    this.offset = offset;
     this.get = function() {
         return (p.buf[offset] > 0 );
     }
@@ -20,6 +22,7 @@ function boolField(p, offset, length) {
 
 function intField(p, offset, length, le, signed) {
     this.length = length;
+    this.offset = offset;
 
     function bec(cb) {
         for (var i = 0; i < length; i++)
@@ -89,6 +92,7 @@ function intField(p, offset, length, le, signed) {
 function charField(p, offset, length, encoding) {
     var self = this;
     self.length = length;
+    self.offset = offset;
     self.encoding = encoding;
     self.get = function() {
         if (!length) return;
@@ -119,6 +123,7 @@ function charField(p, offset, length, encoding) {
 
 function structField(p, offset, struct) {
     this.length = struct.length();
+    this.offset = offset;
     this.get = function() {
         return struct;
     }
@@ -143,6 +148,7 @@ function arrayField(p, offset, len, type) {
         }
     }
     this.length = as.length();
+    this.offset = offset;
     this.allocate = function() {
         as._setBuff(p.buf.slice(offset, offset + as.length()));
     }
@@ -288,6 +294,10 @@ function Struct() {
 
     this._getPriv = function() {
         return priv;
+    }
+
+    this.getOffset = function(field){
+        if(priv.fields[field]) return priv.fields[field].offset;
     }
 
     this.clone = function() {
