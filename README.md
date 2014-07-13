@@ -15,7 +15,7 @@ Example
 
 Define some structure: 
 
-	var Struct = require('../index.js').Struct;
+	var Struct = require('struct');
  
 	var Person = Struct()
 		.chars('firstName',10)
