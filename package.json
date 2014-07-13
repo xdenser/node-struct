@@ -1,5 +1,5 @@
 { "name" : "struct"
-, "version" : "v0.0.6"
+, "version" : "v0.0.7"
 , "description" : "Pack/Unpack multibyte binary values from/to buffers "
 , "author": "Denys Khanzhiyev"
 , "main": "./index.js"
