@@ -1,4 +1,4 @@
-var Struct = require('../index.js').Struct;
+var Struct = require('../index.js');
  
 var Person = Struct()
              .chars('firstName',10)
