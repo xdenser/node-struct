@@ -1,3 +1,9 @@
+/**
+ * Default export `Struct`.
+ */
+// export default Struct;
+module.exports = exports = Struct;
+
 function byteField(p, offset) {
     this.length = 1;
     this.offset = offset;
@@ -377,5 +383,3 @@ function Struct() {
     });
 
 }
-
-exports.Struct = Struct;
