@@ -4,6 +4,9 @@
 // export default Struct;
 module.exports = exports = Struct;
 
+// compatibility
+exports.Struct = Struct;
+
 function byteField(p, offset) {
     this.length = 1;
     this.offset = offset;
