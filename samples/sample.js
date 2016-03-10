@@ -63,8 +63,8 @@ console.log(proxy.list[1].items[1].length);
 
 // Create struct
 var Contact = Struct()
-	  .charnt('name', 64)
-	  .charnt('email', 64);
+	  .charsnt('name', 64)
+	  .charsnt('email', 64);
 	  
 // Create a buffer manually using the size in bytes of all fields of this struct
 var contactBuffer = new Buffer(Contact.length());
