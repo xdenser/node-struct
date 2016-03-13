@@ -278,6 +278,7 @@ function Struct() {
             });
         });
     });
+    this.word8 = this.word8Ule;
     
     ['chars', 'charsnt'].forEach(function (c) {
         self[c] = function (key, length, encoding) {
