@@ -377,7 +377,7 @@ function Struct() {
     this.clone = function () {
         var c = new Struct;
         var p = c._getPriv();
-        p.closures = priv.closures;
+        p.closures = priv.closures.slice(0);
         return c;
     }
     
