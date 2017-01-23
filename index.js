@@ -158,7 +158,7 @@ function charField(p, offset, length, encoding, secure) {
             // Fill rest of the buffer with \0
             var remainSpace = (length - val.length);
             if (remainSpace > 0) {
-                p.buf.fill(0, (offset + val.length), length);
+                p.buf.fill(0, (offset + val.length), offset + length);
             }
 
         } else {
