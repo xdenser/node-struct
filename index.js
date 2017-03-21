@@ -360,7 +360,12 @@ function Struct() {
     
     this.allocate = function () {
         applyClosures(priv);
-        priv.buf = new Buffer(priv.len);
+        if (Buffer.alloc) {
+            priv.buf = Buffer.alloc(priv.len);
+        } else {
+            priv.buf = new Buffer(priv.len);
+            priv.buf.fill(0);
+        }
         allocateFields();
         priv.allocated = true;
         return this;
