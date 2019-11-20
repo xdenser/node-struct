@@ -6,15 +6,15 @@ var Struct = require('../index.js');
  
 // Create 3 structures
 var Car = Struct()
-	  .charnt('constructor', 20)
-	  .charnt('model', 32)
+	  .charsnt('constructor', 20)
+	  .charsnt('model', 32)
 	  .word16Ule('year', 20)
 	  
 var Person = Struct()
 		 .chars('firstName', 10)
 		 .chars('lastName', 10)
 		 .array('items', 3, 'chars', 10)
-		 .word16Sle('balance'),
+		 .word16Sle('balance')
 		 .struct('car', Car);
 		 
 Persons = Struct()
