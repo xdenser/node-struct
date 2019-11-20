@@ -33,7 +33,7 @@ Now allocate buffer for it
 	
 Clear buffer to see how it will change later:
 	
-	var buf = Persons.buffer();
+	var buf = People.buffer();
 	for (var i = 0; i < buf.length ; i++) {
   		buf[i] = 0;
 	}
