@@ -1,19 +1,19 @@
-{ "name" : "struct"
+{ "name" : "struct-jmlee"
 , "version" : "v0.0.12"
 , "description" : "Pack/Unpack multibyte binary values from/to buffers "
-, "author": "Denys Khanzhiyev"
+, "author": "jmlee"
 , "main": "./index.js"
 , "maintainers" :
-  [ { "name": "Denys Khanzhiyev"
-    , "email": "xdenser@gmail.com"
+  [ { "name": "jmlee"
+    , "email": "jmlee@zigbang.com"
     }
   ]
-, "bugs" : { "web" : "http://github.com/xdenser/node-struct/issues" } 
+, "bugs" : { "web" : "http://github.com/jmlee-zigbang/node-struct/issues" } 
 , "licenses" : [ { "type" : "MIT" } ] 
 , "dependencies" : {}
 , "repositories" :
   [ { "type" : "git"
-    , "url" : "http://github.com/xdenser/node-struct.git"
+    , "url" : "http://github.com/jmlee-zigbang/node-struct.git"
     }
   ]
 , "engines": {
