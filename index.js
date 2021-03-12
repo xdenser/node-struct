@@ -29,6 +29,17 @@ function boolField(p, offset, length) {
     }
 }
 
+function bufferField(p, offset, length) {
+    this.length = length;
+    this.offset = offset;
+    this.get = function() {
+        return p.buf.slice(offset, offset + length)
+    }
+    this.set = function(val) {
+        val.copy(p.buf, offset, 0, length)
+    }
+}
+
 function intField(p, offset, length, le, signed) {
     this.length = length;
     this.offset = offset;
@@ -290,6 +301,15 @@ function Struct() {
             return this;
         }
     });
+
+    this.byteArray = function (key, length) {
+        checkAllocated();
+        priv.closures.push(function (p) {
+            p.fields[key] = new bufferField(p, p.len, length);
+            p.len += p.fields[key].length;
+        });
+        return this;
+    }
 
     this.struct = function (key, struct) {
         checkAllocated();
